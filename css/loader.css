@@ -1,0 +1,182 @@
+/* Professional Loading Screen */
+.loading-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, 
+        #667eea 0%, 
+        #764ba2 50%, 
+        #f093fb 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.loading-container.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+    max-width: 400px;
+    width: 90%;
+}
+
+/* Birthday Logo */
+.birthday-logo {
+    margin-bottom: 40px;
+}
+
+.logo-text {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 300;
+    margin-bottom: 8px;
+    opacity: 0.9;
+    letter-spacing: 2px;
+}
+
+.logo-name {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(45deg, #FFD700, #FF69B4, #00CED1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Progress Bar */
+.loading-progress {
+    margin-bottom: 40px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FF69B4);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 0.3s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+    animation: shine 2s ease-in-out infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Loading Animation */
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.balloon {
+    width: 40px;
+    height: 50px;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    position: relative;
+}
+
+.balloon-1 {
+    background: linear-gradient(45deg, #FF69B4, #FF1493);
+    animation: float 3s ease-in-out infinite;
+}
+
+.balloon-2 {
+    background: linear-gradient(45deg, #00CED1, #1E90FF);
+    animation: float 3s ease-in-out infinite 0.5s;
+}
+
+.balloon-3 {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    animation: float 3s ease-in-out infinite 1s;
+}
+
+.balloon::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(2deg);
+    }
+}
+
+/* Responsive loading screen */
+@media (max-width: 480px) {
+    .loading-content {
+        width: 95%;
+    }
+    
+    .logo-text {
+        font-size: 1.2rem;
+    }
+    
+    .logo-name {
+        font-size: 2rem;
+    }
+    
+    .balloon {
+        width: 30px;
+        height: 40px;
+    }
+    
+    .loading-animation {
+        gap: 15px;
+    }
+}
