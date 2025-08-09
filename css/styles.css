@@ -945,3 +945,91 @@ body {
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+/* Info Panel Styles */
+.info-panel {
+    position: absolute;
+    top: 50%;
+    right: var(--spacing-xl);
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    max-width: 350px;
+    min-width: 300px;
+    box-shadow: var(--shadow-strong);
+    pointer-events: auto;
+    transition: var(--transition-smooth);
+    z-index: 150;
+}
+
+.info-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(20px) scale(0.95);
+    visibility: hidden;
+}
+
+.info-content h3 {
+    color: var(--primary-purple);
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+    font-size: 1.2rem;
+    font-family: var(--font-heading);
+}
+
+.info-content ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.info-content li {
+    margin-bottom: var(--spacing-sm);
+    color: #374151;
+    line-height: 1.6;
+    font-size: 14px;
+    padding-left: 0;
+}
+
+.info-content strong {
+    color: var(--primary-pink);
+    font-weight: 600;
+}
+
+.close-info-btn {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--gradient-magic);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.close-info-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Mobile adjustments for info panel */
+@media (max-width: 768px) {
+    .info-panel {
+        right: var(--spacing-lg);
+        left: var(--spacing-lg);
+        max-width: none;
+        min-width: auto;
+        width: calc(100vw - 40px);
+        top: auto;
+        bottom: 120px;
+        transform: none;
+    }
+    
+    .info-panel.hidden {
+        transform: translateY(20px) scale(0.95);
+    }
+}
