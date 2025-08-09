@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Aafia - 3D Celebration</title>
+    <title>Happy Birthday Aafia - Automatic 3D Celebration</title>
     
     <!-- Load CSS files in correct order -->
     <link rel="stylesheet" href="css/loader.css">
@@ -27,7 +27,7 @@
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 <div class="progress-text">
-                    <span id="loading-text">Initializing 3D Experience...</span>
+                    <span id="loading-text">Initializing Celebration...</span>
                     <span id="loading-percentage">0%</span>
                 </div>
             </div>
@@ -39,7 +39,7 @@
             </div>
             
             <div class="loading-tips">
-                Click balloons to pop • Blow out candles • Enjoy the celebration!
+                Automatic celebration will begin shortly!
             </div>
         </div>
     </div>
@@ -48,18 +48,23 @@
     <div id="app-container" class="app-container">
         <canvas id="birthday-canvas" class="birthday-canvas"></canvas>
         
-        <!-- UI Overlay -->
+        <!-- UI Overlay (Simplified for automatic mode) -->
         <div id="ui-overlay" class="ui-overlay">
-            <!-- Navigation -->
-            <nav class="scene-nav">
-                <button class="nav-btn active" data-scene="intro">Intro</button>
-                <button class="nav-btn" data-scene="reveal">Reveal</button>
-                <button class="nav-btn" data-scene="celebration">Celebration</button>
-                <button class="nav-btn" data-scene="message">Message</button>
-                <button class="nav-btn" data-scene="finale">Finale</button>
-            </nav>
+            <!-- Scene Progress Indicator -->
+            <div class="scene-progress">
+                <div class="progress-steps">
+                    <div class="step active" data-scene="intro">Welcome</div>
+                    <div class="step" data-scene="balloons">Balloons</div>
+                    <div class="step" data-scene="cake">Birthday Cake</div>
+                    <div class="step" data-scene="celebration">Celebration</div>
+                    <div class="step" data-scene="finale">Grand Finale</div>
+                </div>
+                <div class="progress-timer">
+                    <span id="scene-timer">0:00</span>
+                </div>
+            </div>
             
-            <!-- Controls -->
+            <!-- Controls (Minimal) -->
             <div class="controls-panel">
                 <button id="audio-toggle" class="control-btn" title="Toggle Audio">
                     <span class="icon">🔊</span>
@@ -67,29 +72,12 @@
                 <button id="fullscreen-toggle" class="control-btn" title="Toggle Fullscreen">
                     <span class="icon">⛶</span>
                 </button>
-                <button id="help-toggle" class="control-btn" title="Show Help">
-                    <span class="icon">?</span>
-                </button>
-            </div>
-            
-            <!-- Help Panel -->
-            <div id="help-panel" class="help-panel hidden">
-                <div class="help-content">
-                    <h3>Interactive Controls</h3>
-                    <ul>
-                        <li><strong>Click balloons</strong> to pop them with magical effects</li>
-                        <li><strong>Hover over cake</strong> to see sparkling animations</li>
-                        <li><strong>Click candles</strong> to blow them out</li>
-                        <li><strong>Use mouse/touch</strong> to rotate the camera view</li>
-                        <li><strong>Scroll/pinch</strong> to zoom in and out</li>
-                    </ul>
-                </div>
             </div>
             
             <!-- Scene Title -->
             <div id="scene-title" class="scene-title">
                 <h1>Welcome to Aafia's Birthday</h1>
-                <p>An immersive 3D celebration experience</p>
+                <p>Automatic celebration experience</p>
             </div>
         </div>
     </div>
@@ -98,12 +86,12 @@
     <div id="error-container" class="error-container hidden">
         <div class="error-content">
             <h2>Oops! Something went wrong</h2>
-            <p id="error-message">Failed to load the 3D experience.</p>
+            <p id="error-message">Failed to load the celebration.</p>
             <button id="retry-btn" class="retry-btn">Try Again</button>
         </div>
     </div>
 
-    <!-- Scripts loaded in correct order -->
+    <!-- Scripts -->
     <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
