@@ -90,6 +90,7 @@ class BirthdayApp {
             throw new Error('Canvas not found');
         }
 
+        // SceneManager will be globally available since we load it via script tag
         this.sceneManager = new SceneManager(this.canvas);
         await this.sceneManager.init();
 
@@ -113,6 +114,23 @@ class BirthdayApp {
         if (fullscreenToggle) {
             fullscreenToggle.addEventListener('click', () => {
                 this.toggleFullscreen();
+            });
+        }
+
+        // Info panel toggle
+        const infoBtn = document.getElementById('info-btn');
+        const infoPanel = document.getElementById('info-panel');
+        const closeInfoBtn = document.getElementById('close-info');
+        
+        if (infoBtn && infoPanel) {
+            infoBtn.addEventListener('click', () => {
+                infoPanel.classList.toggle('hidden');
+            });
+        }
+        
+        if (closeInfoBtn && infoPanel) {
+            closeInfoBtn.addEventListener('click', () => {
+                infoPanel.classList.add('hidden');
             });
         }
 
