@@ -3,23 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Aafia - Premium 3D Experience</title>
-    
-    <!-- Preload critical resources -->
-    <link rel="preload" href="css/styles.css" as="style">
-    <link rel="preload" href="js/main.js" as="script">
-    
-    <!-- Stylesheets -->
+    <title>Happy Birthday Aafia - 3D Celebration</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/loader.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAGYSURBVFhH7ZY9SwNBEIafgJ1YWFhYWNhY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2Nj=">
-    
-    <!-- Meta tags for better SEO and sharing -->
-    <meta name="description" content="An immersive 3D birthday celebration experience for Aafia">
-    <meta property="og:title" content="Happy Birthday Aafia - Premium 3D Experience">
-    <meta property="og:description" content="Join us for an amazing 3D birthday celebration">
 </head>
 <body>
     <!-- Professional Loading Screen -->
@@ -35,7 +20,7 @@
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 <div class="progress-text">
-                    <span id="loading-text">Initializing 3D Environment...</span>
+                    <span id="loading-text">Loading 3D Experience...</span>
                     <span id="loading-percentage">0%</span>
                 </div>
             </div>
@@ -50,7 +35,6 @@
 
     <!-- Main Application Container -->
     <div id="app-container" class="app-container">
-        <!-- 3D Canvas -->
         <canvas id="birthday-canvas" class="birthday-canvas"></canvas>
         
         <!-- UI Overlay -->
@@ -99,16 +83,12 @@
         </div>
     </div>
 
-    <!-- Performance Monitor (Development) -->
-    <div id="performance-stats" class="performance-stats hidden"></div>
-
     <!-- Scripts -->
     <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/stats.js@0.17.0/build/stats.min.js"></script>
     
-    <!-- Application Scripts -->
-    <script type="module" src="js/main.js"></script>
+    <!-- Main Application Script -->
+    <script src="js/main.js"></script>
 </body>
 </html>
