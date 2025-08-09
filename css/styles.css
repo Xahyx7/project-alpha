@@ -1033,3 +1033,173 @@ body {
         transform: translateY(20px) scale(0.95);
     }
 }
+/* Remove center blocking elements and improve layout */
+
+/* Current Action Display - Move to top left corner */
+.current-action-display {
+    position: absolute;
+    top: var(--spacing-lg);
+    left: var(--spacing-lg);
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    pointer-events: none;
+    z-index: 100;
+    animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 300px;
+}
+
+.current-action-display span {
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Remove old center scene-progress */
+.scene-progress {
+    display: none !important;
+}
+
+/* Auto-hide scene title after 3 seconds */
+.scene-title.auto-hide {
+    animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1), fadeOutAfterDelay 1s ease-in-out 3s forwards;
+}
+
+@keyframes fadeOutAfterDelay {
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+        pointer-events: none;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Falling Hearts Animation */
+.falling-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: fallAndFade 4s linear infinite;
+    pointer-events: none;
+    color: #ff69b4;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+}
+
+.heart.small {
+    font-size: 14px;
+}
+
+.heart.large {
+    font-size: 28px;
+}
+
+@keyframes fallAndFade {
+    0% {
+        transform: translateY(-50px) translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    25% {
+        transform: translateY(25vh) translateX(10px) rotate(90deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translateY(50vh) translateX(-5px) rotate(180deg);
+        opacity: 0.6;
+    }
+    75% {
+        transform: translateY(75vh) translateX(15px) rotate(270deg);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(105vh) translateX(0) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .current-action-display {
+        top: var(--spacing-md);
+        left: var(--spacing-md);
+        right: 80px; /* Make room for controls */
+        max-width: calc(100vw - 120px);
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .current-action-display span {
+        font-size: 12px;
+    }
+    
+    .heart {
+        font-size: 16px;
+    }
+    
+    .heart.small {
+        font-size: 12px;
+    }
+    
+    .heart.large {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .current-action-display {
+        font-size: 11px;
+    }
+    
+    .scene-title {
+        display: none; /* Hide on very small screens */
+    }
+}
+
+/* Fullscreen improvements */
+.birthday-canvas:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+.app-container:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+/* Enhanced animations for better visibility */
+.pulse-action {
+    animation: pulseGlow 0.6s ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+    }
+}
