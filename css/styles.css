@@ -1,0 +1,318 @@
+/* Professional CSS with modern design principles */
+:root {
+    --primary-purple: #8B5CF6;
+    --primary-pink: #EC4899;
+    --primary-gold: #F59E0B;
+    --secondary-blue: #06B6D4;
+    --accent-green: #10B981;
+    
+    --gradient-birthday: linear-gradient(135deg, var(--primary-purple), var(--primary-pink));
+    --gradient-magic: linear-gradient(45deg, var(--primary-gold), var(--secondary-blue));
+    
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.2);
+    
+    --border-radius: 12px;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --font-heading: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--gradient-birthday);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* App Container */
+.app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: none; /* Hidden until loaded */
+}
+
+.birthday-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: none;
+}
+
+.birthday-canvas:active {
+    cursor: grabbing;
+}
+
+/* UI Overlay */
+.ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* Scene Navigation */
+.scene-nav {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 50px;
+    padding: 8px;
+    pointer-events: auto;
+    box-shadow: var(--shadow-medium);
+}
+
+.nav-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    background: transparent;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-btn.active {
+    background: var(--gradient-magic);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Controls Panel */
+.controls-panel {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: auto;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.1);
+}
+
+/* Scene Title */
+.scene-title {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    pointer-events: none;
+}
+
+.scene-title h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: var(--gradient-magic);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scene-title p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+/* Help Panel */
+.help-panel {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    max-width: 300px;
+    box-shadow: var(--shadow-strong);
+    pointer-events: auto;
+    transition: var(--transition-smooth);
+}
+
+.help-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(20px);
+}
+
+.help-content h3 {
+    color: var(--primary-purple);
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.help-content ul {
+    list-style: none;
+}
+
+.help-content li {
+    margin-bottom: 12px;
+    color: #374151;
+    line-height: 1.5;
+}
+
+.help-content strong {
+    color: var(--primary-pink);
+    font-weight: 600;
+}
+
+/* Performance Stats */
+.performance-stats {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .scene-nav {
+        top: 20px;
+        gap: 4px;
+        padding: 6px;
+    }
+    
+    .nav-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    .controls-panel {
+        top: 20px;
+        right: 20px;
+        gap: 8px;
+    }
+    
+    .control-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+    }
+    
+    .scene-title {
+        bottom: 40px;
+    }
+    
+    .help-panel {
+        right: 20px;
+        max-width: calc(100vw - 40px);
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scene-nav {
+        flex-wrap: wrap;
+        max-width: calc(100vw - 40px);
+    }
+    
+    .nav-btn {
+        padding: 8px 16px;
+        flex: 1;
+        min-width: 80px;
+    }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .scene-nav {
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid white;
+    }
+    
+    .control-btn {
+        background: rgba(0, 0, 0, 0.8);
+        border: 2px solid white;
+    }
+}
