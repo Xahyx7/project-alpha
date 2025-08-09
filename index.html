@@ -8,13 +8,9 @@
     <!-- Load CSS files -->
     <link rel="stylesheet" href="css/loader.css">
     <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Add some meta tags for better performance -->
-    <meta name="theme-color" content="#8B5CF6">
-    <meta name="description" content="An amazing 3D birthday celebration for Aafia with confetti, fireworks, and magical animations!">
 </head>
 <body>
-    <!-- Professional Loading Screen -->
+    <!-- Your existing HTML content here -->
     <div id="loading-container" class="loading-container">
         <div class="loading-content">
             <div class="birthday-logo">
@@ -44,20 +40,16 @@
         </div>
     </div>
 
-    <!-- Main Application Container -->
     <div id="app-container" class="app-container">
         <canvas id="birthday-canvas" class="birthday-canvas"></canvas>
         
-        <!-- UI Overlay -->
         <div id="ui-overlay" class="ui-overlay">
-            <!-- Dynamic Action Display -->
             <div class="scene-progress">
                 <div class="progress-timer">
                     <span id="current-action">🎉 Preparing Birthday Magic...</span>
                 </div>
             </div>
             
-            <!-- Minimal Controls -->
             <div class="controls-panel">
                 <button id="audio-toggle" class="control-btn" title="Toggle Audio">
                     <span class="icon">🔊</span>
@@ -70,13 +62,11 @@
                 </button>
             </div>
             
-            <!-- Scene Title -->
             <div id="scene-title" class="scene-title">
                 <h1>🎊 Welcome to Aafia's Birthday Party!</h1>
                 <p>Non-stop 30-second celebration with amazing effects!</p>
             </div>
             
-            <!-- Info Panel -->
             <div id="info-panel" class="info-panel hidden">
                 <div class="info-content">
                     <h3>🎂 Birthday Celebration Features</h3>
@@ -96,7 +86,6 @@
         </div>
     </div>
 
-    <!-- Error Display -->
     <div id="error-container" class="error-container hidden">
         <div class="error-content">
             <h2>🎪 Oops! Party Planning Issue</h2>
@@ -105,13 +94,12 @@
         </div>
     </div>
 
-    <!-- Scripts loaded in correct order -->
+    <!-- Scripts in simple order -->
     <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
     
-    <!-- Load SceneManager FIRST, then main.js -->
-    <script src="js/sceneManager.js"></script>
+    <!-- Single main.js file with everything -->
     <script src="js/main.js"></script>
 </body>
 </html>
