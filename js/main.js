@@ -1,7 +1,4 @@
-// Complete Birthday Celebration - Single File Solution
-// This includes SceneManager, BirthdayApp, and AudioManager all in one file
-
-// ===== SCENE MANAGER CLASS =====
+// Complete Birthday Celebration - Enhanced Full Screen Animations
 class SceneManager {
     constructor(canvas) {
         this.canvas = canvas;
@@ -16,7 +13,9 @@ class SceneManager {
             candles: [],
             particles: [],
             stars: [],
-            text: null
+            text: null,
+            activeFireworks: [],
+            activeMessages: []
         };
         
         this.clock = new THREE.Clock();
@@ -25,7 +24,7 @@ class SceneManager {
         
         // Performance optimizations
         this.maxBalloons = 12;
-        this.maxParticles = 60;
+        this.maxParticles = 80; // Increased for full-screen effects
         this.maxStars = 25;
         this.renderScale = Math.min(window.devicePixelRatio, 1.5);
         this.targetFPS = 30;
@@ -36,7 +35,7 @@ class SceneManager {
 
     async init() {
         try {
-            console.log('SceneManager: Initializing full animation version...');
+            console.log('SceneManager: Initializing enhanced full-screen version...');
             
             this.setupRenderer();
             this.setupScene();
@@ -48,7 +47,7 @@ class SceneManager {
             
             this.startRenderLoop();
             
-            console.log('SceneManager: Full animation initialization complete');
+            console.log('SceneManager: Enhanced initialization complete');
             return true;
             
         } catch (error) {
@@ -73,7 +72,7 @@ class SceneManager {
         this.renderer.shadowMap.type = THREE.BasicShadowMap;
         this.renderer.outputColorSpace = THREE.SRGBColorSpace;
         
-        console.log('SceneManager: Renderer optimized for animations');
+        console.log('SceneManager: Enhanced renderer ready');
     }
 
     setupScene() {
@@ -134,18 +133,18 @@ class SceneManager {
     }
 
     async loadOptimizedModels() {
-        console.log('SceneManager: Loading models for full animation...');
+        console.log('SceneManager: Loading models for full-screen animation...');
         
         await Promise.all([
             this.createSimpleEnvironment(),
             this.createOptimizedBalloons(),
             this.createSimpleCake(),
             this.createSimpleText(),
-            this.createOptimizedParticles(),
+            this.createEnhancedParticles(),
             this.createSimpleStars()
         ]);
         
-        console.log('SceneManager: All animation models loaded');
+        console.log('SceneManager: All enhanced models loaded');
     }
 
     async createSimpleEnvironment() {
@@ -246,7 +245,7 @@ class SceneManager {
         this.scene.add(cakeGroup);
         this.objects.cake = cakeGroup;
         
-        console.log('Animation-ready cake created');
+        console.log('Enhanced cake created');
     }
 
     async createSimpleText() {
@@ -283,14 +282,14 @@ class SceneManager {
             this.scene.add(sprite);
             this.objects.text = sprite;
             
-            console.log('Animation-ready text created');
+            console.log('Enhanced text created');
         } catch (error) {
             console.warn('Text creation failed:', error);
         }
     }
 
-    async createOptimizedParticles() {
-        const confettiGeometry = new THREE.PlaneGeometry(0.1, 0.1);
+    async createEnhancedParticles() {
+        const confettiGeometry = new THREE.PlaneGeometry(0.12, 0.12); // Slightly larger
         const colors = [0xff6b9d, 0x45b7d1, 0x96ceb4, 0xffeaa7, 0xdda0dd, 0xff9f43];
         
         for (let i = 0; i < this.maxParticles; i++) {
@@ -302,21 +301,21 @@ class SceneManager {
             });
             
             const confetti = new THREE.Mesh(confettiGeometry, material);
-            confetti.position.set(0, 10, 0);
+            confetti.position.set(0, 15, 0); // Start higher
             
             confetti.userData = {
                 type: 'confetti',
                 active: false,
                 velocity: new THREE.Vector3(),
                 rotationSpeed: new THREE.Vector3(),
-                originalPosition: new THREE.Vector3(0, 10, 0)
+                originalPosition: new THREE.Vector3(0, 15, 0)
             };
             
             this.scene.add(confetti);
             this.objects.particles.push(confetti);
         }
         
-        console.log(`Created ${this.objects.particles.length} animation particles`);
+        console.log(`Created ${this.objects.particles.length} enhanced particles`);
     }
 
     async createSimpleStars() {
@@ -351,7 +350,7 @@ class SceneManager {
         console.log(`Created ${this.objects.stars.length} twinkling stars`);
     }
 
-    // ===== ANIMATION METHODS =====
+    // ===== ENHANCED ANIMATION METHODS =====
 
     cameraShake(intensity = 0.5) {
         if (!this.camera) return;
@@ -372,16 +371,23 @@ class SceneManager {
     }
 
     triggerMegaConfetti() {
-        console.log('🎊 MEGA CONFETTI EXPLOSION!');
+        console.log('🎊 MEGA FULL-SCREEN CONFETTI!');
+        
+        // Clear any existing animations
+        this.clearActiveAnimations();
         
         this.objects.particles.forEach((particle, index) => {
             particle.userData.active = true;
             particle.material.opacity = 1;
-            particle.position.set(0, 8, 0);
             
-            const angle = (Math.random() * Math.PI * 2);
+            // Full screen coverage
+            const startX = (Math.random() - 0.5) * 30;
+            const startZ = (Math.random() - 0.5) * 30;
+            particle.position.set(startX, 20, startZ);
+            
+            const angle = Math.random() * Math.PI * 2;
             const speed = 4 + Math.random() * 4;
-            const height = Math.random() * 6 + 3;
+            const height = Math.random() * 8 + 4;
             
             particle.userData.velocity.set(
                 Math.cos(angle) * speed,
@@ -390,11 +396,16 @@ class SceneManager {
             );
             
             particle.userData.rotationSpeed.set(
-                (Math.random() - 0.5) * 0.4,
-                (Math.random() - 0.5) * 0.4,
-                (Math.random() - 0.5) * 0.4
+                (Math.random() - 0.5) * 0.5,
+                (Math.random() - 0.5) * 0.5,
+                (Math.random() - 0.5) * 0.5
             );
         });
+
+        // Auto-clear after 8 seconds
+        setTimeout(() => {
+            this.clearConfetti();
+        }, 8000);
     }
 
     triggerGentleConfetti() {
@@ -402,14 +413,14 @@ class SceneManager {
         
         let activeCount = 0;
         this.objects.particles.forEach((particle) => {
-            if (activeCount > 25) return;
+            if (activeCount > 30) return;
             
             particle.userData.active = true;
             particle.material.opacity = 0.8;
             particle.position.set(
-                (Math.random() - 0.5) * 20,
-                12 + Math.random() * 3,
-                (Math.random() - 0.5) * 20
+                (Math.random() - 0.5) * 25,
+                15 + Math.random() * 5,
+                (Math.random() - 0.5) * 25
             );
             
             particle.userData.velocity.set(
@@ -420,35 +431,43 @@ class SceneManager {
             
             activeCount++;
         });
+
+        // Auto-clear after 6 seconds
+        setTimeout(() => {
+            this.clearConfetti();
+        }, 6000);
     }
 
     triggerConfettiStorm() {
-        console.log('⛈️ CONFETTI STORM!');
+        console.log('⛈️ CONFETTI STORM COVERING EVERYTHING!');
         
-        for (let wave = 0; wave < 5; wave++) {
+        for (let wave = 0; wave < 6; wave++) {
             setTimeout(() => {
                 this.triggerMegaConfetti();
-            }, wave * 300);
+            }, wave * 500);
         }
     }
 
-    createFloatingMessage(message) {
+    createFloatingMessageWithHearts(message) {
         try {
-            console.log('💌 Creating floating message...');
+            console.log('💌 Creating dropping message with hearts...');
             
+            // Create the message sprite
             const canvas = document.createElement('canvas');
             canvas.width = 1024;
             canvas.height = 512;
             const ctx = canvas.getContext('2d');
             
+            // Gradient background
             const gradient = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, canvas.width/2);
-            gradient.addColorStop(0, 'rgba(255, 105, 180, 0.9)');
-            gradient.addColorStop(0.5, 'rgba(255, 215, 0, 0.8)');
-            gradient.addColorStop(1, 'rgba(0, 206, 209, 0.7)');
+            gradient.addColorStop(0, 'rgba(255, 105, 180, 0.95)');
+            gradient.addColorStop(0.5, 'rgba(255, 215, 0, 0.9)');
+            gradient.addColorStop(1, 'rgba(0, 206, 209, 0.85)');
             
             ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
+            // Message text
             ctx.fillStyle = 'white';
             ctx.font = "bold 60px Arial";
             ctx.textAlign = 'center';
@@ -469,32 +488,47 @@ class SceneManager {
             });
             
             const messageSprite = new THREE.Sprite(material);
-            messageSprite.position.set(0, 8, 0);
-            messageSprite.scale.set(0, 0, 1);
+            messageSprite.position.set(0, 25, 0); // Start from top
+            messageSprite.scale.set(16, 8, 1); // Larger for full-screen impact
             
             this.scene.add(messageSprite);
+            this.objects.activeMessages.push(messageSprite);
+            
+            // Start falling hearts animation
+            this.startFallingHearts();
             
             if (window.gsap) {
-                gsap.to(messageSprite.scale, {
-                    x: 14, y: 7,
-                    duration: 1,
-                    ease: "back.out(1.7)"
-                });
+                // Message drops from above with bounce
+                gsap.fromTo(messageSprite.position, 
+                    { y: 25 },
+                    { y: 8, duration: 2, ease: "bounce.out" }
+                );
                 
+                // Scale animation
+                gsap.fromTo(messageSprite.scale, 
+                    { x: 0, y: 0 },
+                    { x: 16, y: 8, duration: 1.5, ease: "back.out(1.7)" }
+                );
+                
+                // Float gently
                 gsap.to(messageSprite.position, {
                     y: 10,
-                    duration: 4,
+                    duration: 3,
                     yoyo: true,
                     repeat: 1,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    delay: 2
                 });
                 
+                // Fade out and remove
                 gsap.to(messageSprite.material, {
                     opacity: 0,
-                    duration: 1.5,
-                    delay: 4,
+                    duration: 2,
+                    delay: 6,
                     onComplete: () => {
                         this.scene.remove(messageSprite);
+                        this.objects.activeMessages = this.objects.activeMessages.filter(m => m !== messageSprite);
+                        this.stopFallingHearts();
                     }
                 });
             }
@@ -504,15 +538,78 @@ class SceneManager {
         }
     }
 
-    createFirework(position) {
-        console.log('🎆 Creating firework at position:', position);
+    startFallingHearts() {
+        const heartsContainer = document.getElementById('falling-hearts');
+        if (!heartsContainer) return;
+        
+        console.log('💖 Starting falling hearts animation...');
+        
+        // Create multiple heart waves
+        this.heartInterval = setInterval(() => {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    this.createFallingHeart(heartsContainer);
+                }, i * 200);
+            }
+        }, 800);
+        
+        // Stop after 8 seconds
+        setTimeout(() => {
+            this.stopFallingHearts();
+        }, 8000);
+    }
+
+    createFallingHeart(container) {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = '💖';
+        
+        // Random sizes
+        const sizes = ['small', '', 'large'];
+        const randomSize = sizes[Math.floor(Math.random() * sizes.length)];
+        if (randomSize) heart.classList.add(randomSize);
+        
+        // Random horizontal position
+        heart.style.left = Math.random() * 100 + '%';
+        
+        // Random animation duration
+        heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+        heart.style.animationDelay = Math.random() * 0.5 + 's';
+        
+        container.appendChild(heart);
+        
+        // Remove after animation
+        setTimeout(() => {
+            if (container.contains(heart)) {
+                container.removeChild(heart);
+            }
+        }, 5000);
+    }
+
+    stopFallingHearts() {
+        if (this.heartInterval) {
+            clearInterval(this.heartInterval);
+            this.heartInterval = null;
+        }
+        
+        // Clear existing hearts
+        const heartsContainer = document.getElementById('falling-hearts');
+        if (heartsContainer) {
+            heartsContainer.innerHTML = '';
+        }
+        
+        console.log('💖 Stopped falling hearts');
+    }
+
+    createFullScreenFirework(position) {
+        console.log('🎆 Creating FULL-SCREEN firework!');
         
         const colors = [0xff6b9d, 0x45b7d1, 0x96ceb4, 0xffeaa7, 0xdda0dd, 0xff9f43, 0xff69b4, 0x00ced1];
-        const particleCount = 15;
+        const particleCount = 25; // More particles
         
         for (let i = 0; i < particleCount; i++) {
             const particle = new THREE.Mesh(
-                new THREE.SphereGeometry(0.12, 8, 8),
+                new THREE.SphereGeometry(0.15, 8, 8), // Larger particles
                 new THREE.MeshBasicMaterial({ 
                     color: colors[i % colors.length],
                     transparent: true,
@@ -522,36 +619,66 @@ class SceneManager {
             
             particle.position.copy(position);
             this.scene.add(particle);
+            this.objects.activeFireworks.push(particle);
             
             const angle = (i / particleCount) * Math.PI * 2;
-            const elevation = (Math.random() - 0.5) * Math.PI * 0.5;
-            const speed = 4 + Math.random() * 3;
+            const elevation = (Math.random() - 0.5) * Math.PI * 0.8;
+            const speed = 6 + Math.random() * 6; // Faster spread
             
             if (window.gsap) {
                 gsap.to(particle.position, {
                     x: position.x + Math.cos(angle) * Math.cos(elevation) * speed,
                     y: position.y + Math.sin(elevation) * speed,
                     z: position.z + Math.sin(angle) * Math.cos(elevation) * speed,
-                    duration: 2.5,
+                    duration: 3,
                     ease: "power2.out"
                 });
                 
                 gsap.to(particle.scale, {
                     x: 0, y: 0, z: 0,
-                    duration: 2.5,
+                    duration: 3,
                     ease: "power1.out"
                 });
                 
                 gsap.to(particle.material, {
                     opacity: 0,
-                    duration: 2.5,
+                    duration: 3,
                     ease: "power1.out",
                     onComplete: () => {
                         this.scene.remove(particle);
+                        this.objects.activeFireworks = this.objects.activeFireworks.filter(f => f !== particle);
                     }
                 });
             }
         }
+    }
+
+    clearActiveAnimations() {
+        // Clear confetti
+        this.clearConfetti();
+        
+        // Clear fireworks
+        this.objects.activeFireworks.forEach(firework => {
+            this.scene.remove(firework);
+        });
+        this.objects.activeFireworks = [];
+        
+        // Clear messages
+        this.objects.activeMessages.forEach(message => {
+            this.scene.remove(message);
+        });
+        this.objects.activeMessages = [];
+        
+        // Stop hearts
+        this.stopFallingHearts();
+    }
+
+    clearConfetti() {
+        this.objects.particles.forEach(particle => {
+            particle.userData.active = false;
+            particle.material.opacity = 0;
+            particle.position.copy(particle.userData.originalPosition);
+        });
     }
 
     dramaticCameraMove() {
@@ -578,13 +705,13 @@ class SceneManager {
         
         const lights = this.scene.children.filter(child => child.isPointLight || child.isDirectionalLight);
         const colors = [
-            { r: 1, g: 0, b: 0 },     // Red
-            { r: 1, g: 0.5, b: 0 },   // Orange  
-            { r: 1, g: 1, b: 0 },     // Yellow
-            { r: 0, g: 1, b: 0 },     // Green
-            { r: 0, g: 0, b: 1 },     // Blue
-            { r: 0.5, g: 0, b: 1 },   // Purple
-            { r: 1, g: 0, b: 1 }      // Magenta
+            { r: 1, g: 0, b: 0 },
+            { r: 1, g: 0.5, b: 0 },
+            { r: 1, g: 1, b: 0 },
+            { r: 0, g: 1, b: 0 },
+            { r: 0, g: 0, b: 1 },
+            { r: 0.5, g: 0, b: 1 },
+            { r: 1, g: 0, b: 1 }
         ];
         
         lights.forEach((light, lightIndex) => {
@@ -607,6 +734,10 @@ class SceneManager {
     quickReset() {
         console.log('🔄 Quick reset for next cycle...');
         
+        // Clear all active animations
+        this.clearActiveAnimations();
+        
+        // Reset balloons
         this.objects.balloons.forEach(balloon => {
             balloon.visible = false;
             balloon.userData.visible = false;
@@ -614,6 +745,7 @@ class SceneManager {
             balloon.rotation.set(0, 0, 0);
         });
         
+        // Reset cake
         if (this.objects.cake) {
             this.objects.cake.visible = false;
             this.objects.cake.userData.visible = false;
@@ -622,17 +754,20 @@ class SceneManager {
             this.objects.cake.position.y = -1;
         }
         
+        // Reset text
         if (this.objects.text) {
             this.objects.text.visible = false;
             this.objects.text.scale.set(8, 2, 1);
         }
         
+        // Reset stars
         this.objects.stars.forEach(star => {
             star.visible = false;
             star.userData.visible = false;
             star.scale.set(1, 1, 1);
         });
         
+        // Reset particles
         this.objects.particles.forEach(particle => {
             particle.userData.active = false;
             particle.material.opacity = 0;
@@ -659,7 +794,7 @@ class SceneManager {
         };
         
         animate(0);
-        console.log(`SceneManager: Animation render loop started (${this.targetFPS} FPS)`);
+        console.log(`SceneManager: Enhanced render loop started (${this.targetFPS} FPS)`);
     }
 
     update(deltaTime) {
@@ -713,9 +848,9 @@ class SceneManager {
             particle.rotation.y += particle.userData.rotationSpeed.y;
             particle.rotation.z += particle.userData.rotationSpeed.z;
             
-            particle.material.opacity = Math.max(0, particle.material.opacity - deltaTime * 0.4);
+            particle.material.opacity = Math.max(0, particle.material.opacity - deltaTime * 0.3);
             
-            if (particle.position.y < -8 || particle.material.opacity <= 0) {
+            if (particle.position.y < -10 || particle.material.opacity <= 0.1) {
                 particle.userData.active = false;
                 particle.material.opacity = 0;
                 particle.position.copy(particle.userData.originalPosition);
@@ -764,6 +899,8 @@ class SceneManager {
         console.log('SceneManager: Disposing...');
         this.isAnimating = false;
         
+        this.clearActiveAnimations();
+        
         if (this.timeline) {
             this.timeline.kill();
         }
@@ -790,7 +927,7 @@ class SceneManager {
     }
 }
 
-// ===== BIRTHDAY APP CLASS =====
+// ===== ENHANCED BIRTHDAY APP CLASS =====
 class BirthdayApp {
     constructor() {
         this.canvas = null;
@@ -798,14 +935,14 @@ class BirthdayApp {
         this.audioManager = null;
         
         this.timeline = null;
-        this.totalDuration = 30;
+        this.totalDuration = 35; // Slightly longer for better pacing
         this.currentPhase = 0;
         this.phases = [
-            { name: 'welcome', duration: 4, title: 'Welcome Aafia!' },
-            { name: 'surprise', duration: 6, title: 'Surprise Birthday Magic!' },
+            { name: 'welcome', duration: 5, title: 'Welcome Aafia!' },
+            { name: 'surprise', duration: 7, title: 'Surprise Birthday Magic!' },
             { name: 'party', duration: 8, title: 'Party Time!' },
-            { name: 'wishes', duration: 6, title: 'Birthday Wishes!' },
-            { name: 'celebration', duration: 6, title: 'Grand Celebration!' }
+            { name: 'wishes', duration: 8, title: 'Birthday Wishes!' },
+            { name: 'celebration', duration: 7, title: 'Grand Celebration!' }
         ];
         
         this.isLoaded = false;
@@ -815,15 +952,15 @@ class BirthdayApp {
 
     async init() {
         try {
-            console.log('🎉 BirthdayApp: Starting EPIC celebration!');
+            console.log('🎉 BirthdayApp: Starting ENHANCED full-screen celebration!');
             
             this.showLoadingScreen();
             await this.initializeComponents();
             await this.startFullAnimationCelebration();
             
-            console.log('🎊 BirthdayApp: Party is READY!');
+            console.log('🎊 BirthdayApp: Enhanced party is READY!');
         } catch (error) {
-            console.error('💥 BirthdayApp: Party planning failed:', error);
+            console.error('💥 BirthdayApp: Enhanced party planning failed:', error);
             this.showError(error.message);
         }
     }
@@ -835,18 +972,18 @@ class BirthdayApp {
         const loadingPercentage = document.getElementById('loading-percentage');
         
         const loadingSteps = [
-            'Preparing birthday magic...',
+            'Preparing full-screen magic...',
             'Inflating balloons...',
-            'Lighting candles...',
-            'Preparing confetti cannons...',
-            'Ready for celebration!'
+            'Setting up fireworks...',
+            'Preparing heart animations...',
+            'Ready for EPIC celebration!'
         ];
         
         let progress = 0;
         let stepIndex = 0;
         
         const updateProgress = () => {
-            progress += Math.random() * 20 + 10;
+            progress += Math.random() * 15 + 10;
             if (progress > 100) progress = 100;
             
             if (progressFill) progressFill.style.width = `${progress}%`;
@@ -858,14 +995,14 @@ class BirthdayApp {
             }
             
             if (progress < 100) {
-                setTimeout(updateProgress, 200);
+                setTimeout(updateProgress, 250);
             } else {
                 setTimeout(() => {
                     if (loadingContainer) {
                         loadingContainer.classList.add('fade-out');
                     }
                     this.showMainApp();
-                }, 500);
+                }, 600);
             }
         };
         
@@ -886,7 +1023,6 @@ class BirthdayApp {
             throw new Error('Canvas not found - make sure your HTML has the birthday-canvas element');
         }
 
-        // SceneManager is now available since it's defined in the same file
         this.sceneManager = new SceneManager(this.canvas);
         await this.sceneManager.init();
 
@@ -944,58 +1080,43 @@ class BirthdayApp {
     }
 
     async startFullAnimationCelebration() {
-        console.log('🚀 Starting NON-STOP birthday animation party!');
+        console.log('🚀 Starting ENHANCED NON-STOP birthday animation party!');
         
         this.startTime = Date.now();
         this.animationActive = true;
-        this.updateTimer();
-        
-        this.hideStepIndicators();
         
         if (window.gsap) {
-            this.createActionPackedTimeline();
+            this.createEnhancedActionTimeline();
         } else {
             this.createSimpleActionTimeline();
         }
     }
 
-    hideStepIndicators() {
-        const progressSteps = document.querySelector('.progress-steps');
-        if (progressSteps) {
-            progressSteps.style.display = 'none';
-        }
-        
-        const progressTimer = document.querySelector('.progress-timer');
-        if (progressTimer) {
-            progressTimer.innerHTML = '<span id="current-action">🎉 Birthday Magic Starting...</span>';
-        }
-    }
-
-    createActionPackedTimeline() {
-        this.timeline = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+    createEnhancedActionTimeline() {
+        this.timeline = gsap.timeline({ repeat: -1, repeatDelay: 2 });
         
         this.timeline.call(() => this.explodeWelcome());
-        this.timeline.call(() => this.balloonSurpriseAttack(), null, 4);
-        this.timeline.call(() => this.cakeAndCandleMagic(), null, 6);
-        this.timeline.call(() => this.confettiExplosion(), null, 10);
-        this.timeline.call(() => this.showBirthdayMessage(), null, 14);
-        this.timeline.call(() => this.fireworksFinale(), null, 18);
-        this.timeline.call(() => this.megaCelebration(), null, 24);
-        this.timeline.call(() => this.resetForNextRound(), null, 30);
+        this.timeline.call(() => this.balloonSurpriseAttack(), null, 5);
+        this.timeline.call(() => this.cakeAndCandleMagic(), null, 8);
+        this.timeline.call(() => this.confettiExplosion(), null, 12);
+        this.timeline.call(() => this.showBirthdayMessageWithHearts(), null, 16);
+        this.timeline.call(() => this.fireworksFinale(), null, 22);
+        this.timeline.call(() => this.megaCelebration(), null, 28);
+        this.timeline.call(() => this.resetForNextRound(), null, 35);
     }
 
     explodeWelcome() {
-        this.updateAction('🎊 WELCOME EXPLOSION!');
-        console.log('🎊 WELCOME EXPLOSION!');
+        this.updateAction('🎊 EPIC WELCOME EXPLOSION!');
+        console.log('🎊 EPIC WELCOME EXPLOSION!');
         
         if (this.sceneManager.objects.text) {
             this.sceneManager.objects.text.visible = true;
             gsap.fromTo(this.sceneManager.objects.text.scale, 
                 { x: 0, y: 0 }, 
-                { x: 10, y: 3, duration: 0.8, ease: "back.out(2)" }
+                { x: 10, y: 3, duration: 1, ease: "back.out(2)" }
             );
             gsap.to(this.sceneManager.objects.text.scale, 
-                { x: 8, y: 2, duration: 2, delay: 0.8, ease: "power2.inOut" }
+                { x: 8, y: 2, duration: 2.5, delay: 1, ease: "power2.inOut" }
             );
         }
         
@@ -1003,34 +1124,34 @@ class BirthdayApp {
             star.visible = true;
             star.userData.visible = true;
             gsap.fromTo(star.position, 
-                { x: 0, y: 20, z: 0 },
+                { x: 0, y: 25, z: 0 },
                 { 
                     x: star.position.x, 
                     y: star.position.y, 
                     z: star.position.z, 
-                    duration: 1, 
-                    delay: index * 0.02, 
+                    duration: 1.2, 
+                    delay: index * 0.03, 
                     ease: "power2.out" 
                 }
             );
         });
         
-        this.sceneManager.cameraShake(0.5);
+        this.sceneManager.cameraShake(0.7);
     }
 
     balloonSurpriseAttack() {
-        this.updateAction('🎈 BALLOON SURPRISE ATTACK!');
-        console.log('🎈 BALLOON SURPRISE ATTACK!');
+        this.updateAction('🎈 FULL-SCREEN BALLOON INVASION!');
+        console.log('🎈 FULL-SCREEN BALLOON INVASION!');
         
         this.sceneManager.objects.balloons.forEach((balloon, index) => {
             balloon.visible = true;
             balloon.userData.visible = true;
             
             const directions = [
-                { x: -20, y: balloon.userData.originalY, z: 0 },
-                { x: 20, y: balloon.userData.originalY, z: 0 },
-                { x: 0, y: -10, z: balloon.userData.originalY },
-                { x: 0, y: 20, z: balloon.userData.originalY }
+                { x: -25, y: balloon.userData.originalY, z: 0 },
+                { x: 25, y: balloon.userData.originalY, z: 0 },
+                { x: 0, y: -15, z: balloon.userData.originalY },
+                { x: 0, y: 25, z: balloon.userData.originalY }
             ];
             
             const startPos = directions[index % directions.length];
@@ -1041,37 +1162,37 @@ class BirthdayApp {
                     x: balloon.position.x, 
                     y: balloon.userData.originalY, 
                     z: balloon.position.z, 
-                    duration: 1.5, 
-                    delay: index * 0.1, 
-                    ease: "back.out(1.2)" 
+                    duration: 2, 
+                    delay: index * 0.15, 
+                    ease: "back.out(1.4)" 
                 }
             );
             
             gsap.to(balloon.rotation, {
-                y: Math.PI * 2,
-                duration: 1.5,
-                delay: index * 0.1,
+                y: Math.PI * 3,
+                duration: 2,
+                delay: index * 0.15,
                 ease: "power2.out"
             });
         });
     }
 
     cakeAndCandleMagic() {
-        this.updateAction('🎂 MAGICAL CAKE APPEARANCE!');
-        console.log('🎂 MAGICAL CAKE APPEARANCE!');
+        this.updateAction('🎂 MAGICAL CAKE RISES FROM DEPTHS!');
+        console.log('🎂 MAGICAL CAKE RISES FROM DEPTHS!');
         
         if (this.sceneManager.objects.cake) {
             this.sceneManager.objects.cake.visible = true;
             this.sceneManager.objects.cake.userData.visible = true;
             
             gsap.fromTo(this.sceneManager.objects.cake.position, 
-                { y: -10 },
-                { y: -1, duration: 2, ease: "back.out(1.7)" }
+                { y: -15 },
+                { y: -1, duration: 2.5, ease: "back.out(1.9)" }
             );
             
             gsap.fromTo(this.sceneManager.objects.cake.scale, 
                 { x: 0, y: 0, z: 0 },
-                { x: 1, y: 1, z: 1, duration: 2, ease: "back.out(1.7)" }
+                { x: 1.2, y: 1.2, z: 1.2, duration: 2.5, ease: "back.out(1.9)" }
             );
         }
         
@@ -1080,88 +1201,88 @@ class BirthdayApp {
                 setTimeout(() => {
                     gsap.fromTo(flame.scale, 
                         { x: 0, y: 0, z: 0 },
-                        { x: 1, y: 1, z: 1, duration: 0.3, ease: "back.out(2)" }
+                        { x: 1.5, y: 1.5, z: 1.5, duration: 0.4, ease: "back.out(3)" }
                     );
-                    this.audioManager.playTone(440 + index * 50, 0.3);
-                }, index * 200);
+                    this.audioManager.playTone(440 + index * 60, 0.4);
+                }, index * 250);
             });
-        }, 1000);
+        }, 1500);
     }
 
     confettiExplosion() {
-        this.updateAction('🎊 CONFETTI EXPLOSION TIME!');
-        console.log('🎊 CONFETTI EXPLOSION TIME!');
+        this.updateAction('🎊 MASSIVE FULL-SCREEN CONFETTI BLAST!');
+        console.log('🎊 MASSIVE FULL-SCREEN CONFETTI BLAST!');
         
         this.sceneManager.triggerMegaConfetti();
-        this.sceneManager.cameraShake(1);
+        this.sceneManager.cameraShake(1.2);
         this.audioManager.playExplosion();
         
         this.sceneManager.objects.balloons.forEach((balloon) => {
             if (balloon.userData.visible) {
                 gsap.to(balloon.scale, { 
-                    x: 1.5, y: 1.5, z: 1.5, 
-                    duration: 0.3, 
+                    x: 1.8, y: 1.8, z: 1.8, 
+                    duration: 0.4, 
                     yoyo: true, 
-                    repeat: 5, 
+                    repeat: 6, 
                     ease: "power2.inOut" 
                 });
                 
                 gsap.to(balloon.position, {
-                    y: balloon.userData.originalY + 2,
-                    duration: 0.5,
+                    y: balloon.userData.originalY + 3,
+                    duration: 0.6,
                     yoyo: true,
-                    repeat: 3,
+                    repeat: 4,
                     ease: "power2.inOut"
                 });
             }
         });
     }
 
-    showBirthdayMessage() {
-        this.updateAction('💌 SPECIAL BIRTHDAY MESSAGE!');
-        console.log('💌 SPECIAL BIRTHDAY MESSAGE!');
+    showBirthdayMessageWithHearts() {
+        this.updateAction('💌 DROPPING BIRTHDAY MESSAGE WITH HEARTS!');
+        console.log('💌 DROPPING BIRTHDAY MESSAGE WITH HEARTS!');
         
-        this.sceneManager.createFloatingMessage("Happy Birthday Aafia! 🎉\nMay all your dreams come true! ✨");
+        this.sceneManager.createFloatingMessageWithHearts("🎉 Happy Birthday Aafia! 🎉\n✨ May all your dreams come true! ✨\n💖 You're absolutely amazing! 💖");
         this.sceneManager.triggerGentleConfetti();
     }
 
     fireworksFinale() {
-        this.updateAction('🎆 FIREWORKS FINALE!');
-        console.log('🎆 FIREWORKS FINALE!');
+        this.updateAction('🎆 EPIC FULL-SCREEN FIREWORKS FINALE!');
+        console.log('🎆 EPIC FULL-SCREEN FIREWORKS FINALE!');
         
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 8; i++) {
             setTimeout(() => {
                 const position = new THREE.Vector3(
-                    (Math.random() - 0.5) * 20,
-                    Math.random() * 10 + 8,
-                    (Math.random() - 0.5) * 20
+                    (Math.random() - 0.5) * 25,
+                    Math.random() * 12 + 10,
+                    (Math.random() - 0.5) * 25
                 );
-                this.sceneManager.createFirework(position);
+                this.sceneManager.createFullScreenFirework(position);
                 this.audioManager.playFirework();
-            }, i * 500);
+            }, i * 600);
         }
         
         this.sceneManager.dramaticCameraMove();
     }
 
     megaCelebration() {
-        this.updateAction('🏆 MEGA CELEBRATION MODE!');
-        console.log('🏆 MEGA CELEBRATION MODE!');
+        this.updateAction('🏆 ULTIMATE MEGA CELEBRATION MODE!');
+        console.log('🏆 ULTIMATE MEGA CELEBRATION MODE!');
         
         if (this.sceneManager.objects.text) {
             gsap.to(this.sceneManager.objects.text.scale, {
-                x: 12, y: 4,
-                duration: 1,
+                x: 14, y: 5,
+                duration: 1.5,
                 yoyo: true,
-                repeat: 3,
+                repeat: 4,
                 ease: "power2.inOut"
             });
         }
         
         if (this.sceneManager.objects.cake) {
             gsap.to(this.sceneManager.objects.cake.rotation, {
-                y: Math.PI * 4,
-                duration: 3,
+                y: Math.PI * 6,
+                duration: 4,
                 ease: "power2.inOut"
             });
         }
@@ -1174,67 +1295,52 @@ class BirthdayApp {
     }
 
     resetForNextRound() {
-        this.updateAction('🔄 Restarting the party...');
-        console.log('🔄 Restarting birthday party...');
+        this.updateAction('🔄 Preparing for next EPIC round...');
+        console.log('🔄 Preparing for next EPIC round...');
         
         setTimeout(() => {
             this.sceneManager.quickReset();
             this.startTime = Date.now();
-        }, 1000);
+        }, 2000);
     }
 
     updateAction(action) {
         const actionElement = document.getElementById('current-action');
         if (actionElement) {
             actionElement.textContent = action;
-            gsap.fromTo(actionElement, 
-                { scale: 1 }, 
-                { scale: 1.1, duration: 0.2, yoyo: true, repeat: 1 }
-            );
-        }
-        
-        const sceneTitle = document.getElementById('scene-title');
-        if (sceneTitle) {
-            const h1 = sceneTitle.querySelector('h1');
-            if (h1) {
-                h1.textContent = action;
-                gsap.fromTo(h1, { scale: 1 }, { scale: 1.05, duration: 0.3, yoyo: true, repeat: 1 });
+            
+            // Add pulse effect
+            const container = actionElement.parentElement;
+            if (container) {
+                container.classList.add('pulse-action');
+                setTimeout(() => {
+                    container.classList.remove('pulse-action');
+                }, 600);
             }
         }
-    }
-
-    updateTimer() {
-        const updateTime = () => {
-            if (!this.animationActive) {
-                requestAnimationFrame(updateTime);
-                return;
-            }
-            
-            const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            
-            const timerElement = document.getElementById('scene-timer');
-            if (timerElement) {
-                timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            }
-            
-            requestAnimationFrame(updateTime);
-        };
         
-        updateTime();
+        // Hide scene title after first action
+        if (action.includes('WELCOME')) {
+            setTimeout(() => {
+                const sceneTitle = document.getElementById('scene-title');
+                if (sceneTitle) {
+                    sceneTitle.style.opacity = '0';
+                    sceneTitle.style.transform = 'translateX(-50%) translateY(30px)';
+                }
+            }, 3000);
+        }
     }
 
     createSimpleActionTimeline() {
         const phases = [
             { delay: 0, action: () => this.explodeWelcome() },
-            { delay: 4000, action: () => this.balloonSurpriseAttack() },
-            { delay: 6000, action: () => this.cakeAndCandleMagic() },
-            { delay: 10000, action: () => this.confettiExplosion() },
-            { delay: 14000, action: () => this.showBirthdayMessage() },
-            { delay: 18000, action: () => this.fireworksFinale() },
-            { delay: 24000, action: () => this.megaCelebration() },
-            { delay: 30000, action: () => this.resetForNextRound() }
+            { delay: 5000, action: () => this.balloonSurpriseAttack() },
+            { delay: 8000, action: () => this.cakeAndCandleMagic() },
+            { delay: 12000, action: () => this.confettiExplosion() },
+            { delay: 16000, action: () => this.showBirthdayMessageWithHearts() },
+            { delay: 22000, action: () => this.fireworksFinale() },
+            { delay: 28000, action: () => this.megaCelebration() },
+            { delay: 35000, action: () => this.resetForNextRound() }
         ];
         
         const startCycle = () => {
@@ -1242,7 +1348,7 @@ class BirthdayApp {
                 setTimeout(phase.action, phase.delay);
             });
             
-            setTimeout(startCycle, 32000);
+            setTimeout(startCycle, 38000);
         };
         
         startCycle();
@@ -1270,12 +1376,12 @@ class BirthdayApp {
     }
 }
 
-// ===== AUDIO MANAGER CLASS =====
+// ===== ENHANCED AUDIO MANAGER CLASS =====
 class AudioManager {
     constructor() {
         this.enabled = true;
         this.audioContext = null;
-        this.volume = 0.4;
+        this.volume = 0.3; // Slightly lower for better experience
     }
 
     async init() {
@@ -1313,15 +1419,15 @@ class AudioManager {
     }
 
     playExplosion() {
-        this.playTone(100, 0.3);
-        setTimeout(() => this.playTone(150, 0.4), 100);
-        setTimeout(() => this.playTone(80, 0.5), 200);
+        this.playTone(120, 0.4);
+        setTimeout(() => this.playTone(180, 0.5), 100);
+        setTimeout(() => this.playTone(90, 0.6), 200);
     }
 
     playFirework() {
-        this.playTone(800, 0.2);
-        setTimeout(() => this.playTone(600, 0.3), 100);
-        setTimeout(() => this.playTone(400, 0.4), 200);
+        this.playTone(900, 0.3);
+        setTimeout(() => this.playTone(700, 0.4), 120);
+        setTimeout(() => this.playTone(500, 0.5), 240);
     }
 
     toggle() {
@@ -1330,13 +1436,13 @@ class AudioManager {
     }
 }
 
-// ===== INITIALIZE THE APP =====
+// ===== INITIALIZE THE ENHANCED APP =====
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🎉 Welcome to Aafia\'s Birthday Celebration! 🎂');
-    console.log('✨ Get ready for 30 seconds of non-stop birthday magic! ✨');
+    console.log('🎉 Welcome to Aafia\'s ENHANCED Birthday Celebration! 🎂');
+    console.log('✨ Get ready for full-screen birthday magic with hearts! ✨');
     
     const app = new BirthdayApp();
     app.init().catch(error => {
-        console.error('💥 Failed to initialize birthday app:', error);
+        console.error('💥 Failed to initialize enhanced birthday app:', error);
     });
 });
