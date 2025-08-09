@@ -1,4 +1,4 @@
-/* Professional Loading Screen */
+/* Professional Loading Screen Styles */
 .loading-container {
     position: fixed;
     top: 0;
@@ -13,72 +13,160 @@
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
 .loading-container.fade-out {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 .loading-content {
     text-align: center;
     color: white;
-    max-width: 400px;
+    max-width: 450px;
     width: 90%;
+    position: relative;
 }
 
-/* Birthday Logo */
+/* Enhanced Birthday Logo */
 .birthday-logo {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    position: relative;
 }
 
 .logo-text {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 300;
-    margin-bottom: 8px;
-    opacity: 0.9;
-    letter-spacing: 2px;
+    margin-bottom: 12px;
+    opacity: 0.95;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: fadeInDown 1s ease-out;
 }
 
 .logo-name {
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    font-weight: 800;
-    background: linear-gradient(45deg, #FFD700, #FF69B4, #00CED1);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    background: linear-gradient(45deg, #FFD700, #FF69B4, #00CED1, #32CD32);
+    background-size: 400% 400%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s ease-in-out infinite;
+    animation: shimmer 4s ease-in-out infinite, fadeInUp 1.2s ease-out;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    position: relative;
+}
+
+.logo-name::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 10px;
+    opacity: 0;
+    animation: sparkle 3s ease-in-out infinite;
 }
 
 @keyframes shimmer {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%, 100% { 
+        background-position: 0% 50%; 
+        transform: scale(1);
+    }
+    25% { 
+        background-position: 100% 50%; 
+        transform: scale(1.02);
+    }
+    50% { 
+        background-position: 200% 50%; 
+        transform: scale(1);
+    }
+    75% { 
+        background-position: 300% 50%; 
+        transform: scale(1.02);
+    }
 }
 
-/* Progress Bar */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 0.95;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.3; }
+}
+
+/* Enhanced Progress Bar */
 .loading-progress {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
+    position: relative;
 }
 
 .progress-bar {
     width: 100%;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 16px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.2),
+        0 0 10px rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    animation: shimmerBar 2s ease-in-out infinite;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #FFD700, #FF69B4);
-    border-radius: 10px;
+    background: linear-gradient(90deg, 
+        #FFD700 0%, 
+        #FF69B4 25%, 
+        #00CED1 50%, 
+        #32CD32 75%, 
+        #FFD700 100%);
+    background-size: 200% 100%;
+    border-radius: 20px;
     width: 0%;
-    transition: width 0.3s ease-out;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    animation: gradientShift 3s ease-in-out infinite;
 }
 
 .progress-fill::after {
@@ -90,77 +178,190 @@
     right: 0;
     background: linear-gradient(90deg, 
         transparent, 
-        rgba(255, 255, 255, 0.4), 
+        rgba(255, 255, 255, 0.6), 
         transparent);
-    animation: shine 2s ease-in-out infinite;
+    animation: shine 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmerBar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
 }
 
 @keyframes shine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% { transform: translateX(-200%); }
+    100% { transform: translateX(200%); }
 }
 
 .progress-text {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 14px;
-    opacity: 0.8;
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.9;
+    margin-top: 5px;
 }
 
-/* Loading Animation */
+#loading-text {
+    color: rgba(255, 255, 255, 0.9);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+#loading-percentage {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* Enhanced Loading Animation */
 .loading-animation {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    align-items: flex-end;
+    gap: 25px;
+    height: 80px;
 }
 
 .balloon {
-    width: 40px;
-    height: 50px;
+    width: 45px;
+    height: 60px;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     position: relative;
+    box-shadow: 
+        inset -5px -5px 10px rgba(0, 0, 0, 0.2),
+        0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .balloon-1 {
-    background: linear-gradient(45deg, #FF69B4, #FF1493);
-    animation: float 3s ease-in-out infinite;
+    background: linear-gradient(135deg, #FF69B4, #FF1493, #DC143C);
+    animation: float 4s ease-in-out infinite, bounce 0.8s ease-in-out infinite alternate;
 }
 
 .balloon-2 {
-    background: linear-gradient(45deg, #00CED1, #1E90FF);
-    animation: float 3s ease-in-out infinite 0.5s;
+    background: linear-gradient(135deg, #00CED1, #1E90FF, #0066CC);
+    animation: float 4s ease-in-out infinite 0.8s, bounce 0.9s ease-in-out infinite alternate 0.2s;
 }
 
 .balloon-3 {
-    background: linear-gradient(45deg, #FFD700, #FFA500);
-    animation: float 3s ease-in-out infinite 1s;
+    background: linear-gradient(135deg, #FFD700, #FFA500, #FF8C00);
+    animation: float 4s ease-in-out infinite 1.6s, bounce 1s ease-in-out infinite alternate 0.4s;
 }
 
 .balloon::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 2px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.6);
+    width: 3px;
+    height: 40px;
+    background: linear-gradient(to bottom, 
+        rgba(255, 255, 255, 0.8), 
+        rgba(255, 255, 255, 0.4));
+    border-radius: 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.balloon::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 8px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    animation: highlight 3s ease-in-out infinite;
 }
 
 @keyframes float {
     0%, 100% {
-        transform: translateY(0px) rotate(-2deg);
+        transform: translateY(0px) rotate(-3deg);
+    }
+    25% {
+        transform: translateY(-25px) rotate(2deg);
     }
     50% {
-        transform: translateY(-20px) rotate(2deg);
+        transform: translateY(-35px) rotate(0deg);
+    }
+    75% {
+        transform: translateY(-20px) rotate(-2deg);
     }
 }
 
-/* Responsive loading screen */
-@media (max-width: 480px) {
+@keyframes bounce {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
+}
+
+@keyframes highlight {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+}
+
+/* Loading Tips */
+.loading-tips {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    opacity: 0.7;
+    text-align: center;
+    animation: fadeInOut 4s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+}
+
+/* Responsive Design for Loading */
+@media (max-width: 768px) {
     .loading-content {
         width: 95%;
+        max-width: 350px;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+    
+    .logo-name {
+        font-size: 2.5rem;
+    }
+    
+    .balloon {
+        width: 35px;
+        height: 50px;
+    }
+    
+    .loading-animation {
+        gap: 20px;
+        height: 65px;
+    }
+    
+    .balloon::after {
+        height: 30px;
+        width: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .loading-content {
+        width: 90%;
     }
     
     .logo-text {
@@ -178,5 +379,46 @@
     
     .loading-animation {
         gap: 15px;
+        height: 55px;
+    }
+    
+    .progress-text {
+        font-size: 13px;
+    }
+}
+
+/* Accessibility Support */
+@media (prefers-reduced-motion: reduce) {
+    .balloon,
+    .logo-name,
+    .progress-fill::after,
+    .loading-tips {
+        animation: none !important;
+    }
+    
+    .progress-fill {
+        transition: width 0.3s ease !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .loading-container {
+        background: #000;
+        border: 3px solid #fff;
+    }
+    
+    .logo-text,
+    .progress-text {
+        color: #fff !important;
+    }
+    
+    .progress-bar {
+        background: #333 !important;
+        border: 2px solid #fff;
+    }
+    
+    .progress-fill {
+        background: #fff !important;
     }
 }
