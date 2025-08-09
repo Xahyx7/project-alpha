@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="css/loader.css">
     <link rel="stylesheet" href="css/styles.css">
     
-    <!-- Preload critical resources -->
-    <link rel="preload" href="https://unpkg.com/three@0.158.0/build/three.min.js" as="script">
-    <link rel="preload" href="js/main.js" as="script">
-    
     <!-- Add some meta tags for better performance -->
     <meta name="theme-color" content="#8B5CF6">
     <meta name="description" content="An amazing 3D birthday celebration for Aafia with confetti, fireworks, and magical animations!">
@@ -54,7 +50,7 @@
         
         <!-- UI Overlay -->
         <div id="ui-overlay" class="ui-overlay">
-            <!-- Dynamic Action Display (No boring steps!) -->
+            <!-- Dynamic Action Display -->
             <div class="scene-progress">
                 <div class="progress-timer">
                     <span id="current-action">🎉 Preparing Birthday Magic...</span>
@@ -74,13 +70,13 @@
                 </button>
             </div>
             
-            <!-- Scene Title (Dynamic) -->
+            <!-- Scene Title -->
             <div id="scene-title" class="scene-title">
                 <h1>🎊 Welcome to Aafia's Birthday Party!</h1>
                 <p>Non-stop 30-second celebration with amazing effects!</p>
             </div>
             
-            <!-- Hidden Info Panel -->
+            <!-- Info Panel -->
             <div id="info-panel" class="info-panel hidden">
                 <div class="info-content">
                     <h3>🎂 Birthday Celebration Features</h3>
@@ -114,47 +110,8 @@
     <script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
     
-    <!-- Main Application Script as Module -->
-    <script type="module" src="js/main.js"></script>
-    
-    <!-- Add some extra birthday magic -->
-    <script>
-        // Add some fun console messages
-        console.log('🎉 Welcome to Aafia\'s Birthday Celebration! 🎂');
-        console.log('✨ Get ready for 30 seconds of non-stop birthday magic! ✨');
-        console.log('🎊 Features: Confetti • Fireworks • Dancing Balloons • Magical Cake 🎊');
-        
-        // Add keyboard shortcuts for extra fun
-        document.addEventListener('keydown', (e) => {
-            switch(e.key.toLowerCase()) {
-                case ' ': // Spacebar
-                    console.log('🎊 MANUAL CONFETTI BLAST! 🎊');
-                    break;
-                case 'f':
-                    document.getElementById('fullscreen-toggle')?.click();
-                    break;
-                case 'm':
-                    document.getElementById('audio-toggle')?.click();
-                    break;
-                case 'i':
-                    document.getElementById('info-btn')?.click();
-                    break;
-            }
-        });
-        
-        // Add some birthday wishes in console
-        const wishes = [
-            '🎂 Happy Birthday Aafia! May all your dreams come true! ✨',
-            '🎈 Wishing you joy, happiness, and lots of cake! 🍰',
-            '🎊 Another year of awesome begins today! 🌟',
-            '🎉 May your special day be filled with magic! 🪄'
-        ];
-        
-        wishes.forEach((wish, index) => {
-            setTimeout(() => {
-                console.log(wish);
-            }, (index + 1) * 3000);
-        });
-    </script>
+    <!-- Load SceneManager FIRST, then main.js -->
+    <script src="js/sceneManager.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
