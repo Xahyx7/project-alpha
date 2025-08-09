@@ -1,5 +1,5 @@
 // Complete Performance Scene Manager with ALL Animations
-export class SceneManager {
+class SceneManager {
     constructor(canvas) {
         this.canvas = canvas;
         this.scene = null;
@@ -236,15 +236,10 @@ export class SceneManager {
             flame.position.set(0, 0.2, 0);
             flame.userData = { type: 'flame', id: i, lit: true };
             
-            // Add point light for each candle
-            const flameLight = new THREE.PointLight(0xff6600, 0.2, 2);
-            flameLight.position.copy(flame.position);
-            flame.add(flameLight);
-            
             candle.add(flame);
             cakeGroup.add(candle);
             
-            this.objects.candles.push({ candle, flame, light: flameLight });
+            this.objects.candles.push({ candle, flame });
         }
         
         cakeGroup.position.y = -1;
@@ -718,15 +713,11 @@ export class SceneManager {
     updateCandles(deltaTime) {
         const time = this.clock.elapsedTime;
         
-        this.objects.candles.forEach(({ flame, light }) => {
+        this.objects.candles.forEach(({ flame }) => {
             if (!flame.userData.lit) return;
             
             const flicker = 0.7 + Math.sin(time * 12 + flame.userData.id * 2) * 0.3;
             flame.material.opacity = flicker;
-            
-            if (light) {
-                light.intensity = 0.2 * flicker;
-            }
         });
     }
 
@@ -782,20 +773,6 @@ export class SceneManager {
     transitionToScene(sceneName) {
         console.log(`SceneManager: Transitioning to ${sceneName}`);
         this.currentScene = sceneName;
-    }
-
-    onSceneChange(callback) {
-        this.sceneCallbacks.push(callback);
-    }
-
-    notifySceneChange(sceneName) {
-        this.sceneCallbacks.forEach(callback => {
-            try {
-                callback(sceneName);
-            } catch (error) {
-                console.error('Scene callback error:', error);
-            }
-        });
     }
 
     handleResize() {
