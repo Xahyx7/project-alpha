@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Your existing HTML content here -->
+    <!-- Professional Loading Screen -->
     <div id="loading-container" class="loading-container">
         <div class="loading-content">
             <div class="birthday-logo">
@@ -40,16 +40,18 @@
         </div>
     </div>
 
+    <!-- Main Application Container -->
     <div id="app-container" class="app-container">
         <canvas id="birthday-canvas" class="birthday-canvas"></canvas>
         
+        <!-- UI Overlay - Moved to edges -->
         <div id="ui-overlay" class="ui-overlay">
-            <div class="scene-progress">
-                <div class="progress-timer">
-                    <span id="current-action">🎉 Preparing Birthday Magic...</span>
-                </div>
+            <!-- Current Action Display - Top Left -->
+            <div class="current-action-display">
+                <span id="current-action">🎉 Preparing Birthday Magic...</span>
             </div>
             
+            <!-- Minimal Controls - Top Right -->
             <div class="controls-panel">
                 <button id="audio-toggle" class="control-btn" title="Toggle Audio">
                     <span class="icon">🔊</span>
@@ -62,11 +64,13 @@
                 </button>
             </div>
             
-            <div id="scene-title" class="scene-title">
+            <!-- Scene Title - Bottom (Auto-hide) -->
+            <div id="scene-title" class="scene-title auto-hide">
                 <h1>🎊 Welcome to Aafia's Birthday Party!</h1>
                 <p>Non-stop 30-second celebration with amazing effects!</p>
             </div>
             
+            <!-- Info Panel -->
             <div id="info-panel" class="info-panel hidden">
                 <div class="info-content">
                     <h3>🎂 Birthday Celebration Features</h3>
@@ -83,9 +87,13 @@
                     <button id="close-info" class="close-info-btn">Got it! 🎉</button>
                 </div>
             </div>
+
+            <!-- Falling Hearts Container -->
+            <div id="falling-hearts" class="falling-hearts"></div>
         </div>
     </div>
 
+    <!-- Error Display -->
     <div id="error-container" class="error-container hidden">
         <div class="error-content">
             <h2>🎪 Oops! Party Planning Issue</h2>
