@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Aafia - Automatic 3D Celebration</title>
+    <title>Happy Birthday Aafia - Non-Stop Celebration!</title>
     
-    <!-- Load CSS files in correct order -->
+    <!-- Load CSS files -->
     <link rel="stylesheet" href="css/loader.css">
     <link rel="stylesheet" href="css/styles.css">
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://unpkg.com/three@0.158.0/build/three.min.js" as="script">
     <link rel="preload" href="js/main.js" as="script">
+    
+    <!-- Add some meta tags for better performance -->
+    <meta name="theme-color" content="#8B5CF6">
+    <meta name="description" content="An amazing 3D birthday celebration for Aafia with confetti, fireworks, and magical animations!">
 </head>
 <body>
     <!-- Professional Loading Screen -->
@@ -27,7 +31,7 @@
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 <div class="progress-text">
-                    <span id="loading-text">Initializing Celebration...</span>
+                    <span id="loading-text">Preparing birthday magic...</span>
                     <span id="loading-percentage">0%</span>
                 </div>
             </div>
@@ -39,7 +43,7 @@
             </div>
             
             <div class="loading-tips">
-                Automatic celebration will begin shortly!
+                Non-stop birthday celebration loading! 🎉
             </div>
         </div>
     </div>
@@ -48,23 +52,16 @@
     <div id="app-container" class="app-container">
         <canvas id="birthday-canvas" class="birthday-canvas"></canvas>
         
-        <!-- UI Overlay (Simplified for automatic mode) -->
+        <!-- UI Overlay -->
         <div id="ui-overlay" class="ui-overlay">
-            <!-- Scene Progress Indicator -->
+            <!-- Dynamic Action Display (No boring steps!) -->
             <div class="scene-progress">
-                <div class="progress-steps">
-                    <div class="step active" data-scene="intro">Welcome</div>
-                    <div class="step" data-scene="balloons">Balloons</div>
-                    <div class="step" data-scene="cake">Birthday Cake</div>
-                    <div class="step" data-scene="celebration">Celebration</div>
-                    <div class="step" data-scene="finale">Grand Finale</div>
-                </div>
                 <div class="progress-timer">
-                    <span id="scene-timer">0:00</span>
+                    <span id="current-action">🎉 Preparing Birthday Magic...</span>
                 </div>
             </div>
             
-            <!-- Controls (Minimal) -->
+            <!-- Minimal Controls -->
             <div class="controls-panel">
                 <button id="audio-toggle" class="control-btn" title="Toggle Audio">
                     <span class="icon">🔊</span>
@@ -72,12 +69,33 @@
                 <button id="fullscreen-toggle" class="control-btn" title="Toggle Fullscreen">
                     <span class="icon">⛶</span>
                 </button>
+                <button id="info-btn" class="control-btn" title="About">
+                    <span class="icon">ℹ️</span>
+                </button>
             </div>
             
-            <!-- Scene Title -->
+            <!-- Scene Title (Dynamic) -->
             <div id="scene-title" class="scene-title">
-                <h1>Welcome to Aafia's Birthday</h1>
-                <p>Automatic celebration experience</p>
+                <h1>🎊 Welcome to Aafia's Birthday Party!</h1>
+                <p>Non-stop 30-second celebration with amazing effects!</p>
+            </div>
+            
+            <!-- Hidden Info Panel -->
+            <div id="info-panel" class="info-panel hidden">
+                <div class="info-content">
+                    <h3>🎂 Birthday Celebration Features</h3>
+                    <ul>
+                        <li>✨ <strong>Automatic Timeline</strong> - 30 seconds of non-stop action</li>
+                        <li>🎈 <strong>Balloon Surprise Attack</strong> - Colorful balloons from all directions</li>
+                        <li>🎂 <strong>Magical Cake</strong> - Rising cake with flickering candles</li>
+                        <li>🎊 <strong>Confetti Explosions</strong> - Multiple confetti storms</li>
+                        <li>🎆 <strong>Fireworks Finale</strong> - Grand firework displays</li>
+                        <li>💌 <strong>Special Messages</strong> - Floating birthday wishes</li>
+                        <li>🌈 <strong>Rainbow Lighting</strong> - Dynamic color effects</li>
+                        <li>🎬 <strong>Camera Magic</strong> - Dramatic movements and shakes</li>
+                    </ul>
+                    <button id="close-info" class="close-info-btn">Got it! 🎉</button>
+                </div>
             </div>
         </div>
     </div>
@@ -85,19 +103,58 @@
     <!-- Error Display -->
     <div id="error-container" class="error-container hidden">
         <div class="error-content">
-            <h2>Oops! Something went wrong</h2>
-            <p id="error-message">Failed to load the celebration.</p>
-            <button id="retry-btn" class="retry-btn">Try Again</button>
+            <h2>🎪 Oops! Party Planning Issue</h2>
+            <p id="error-message">We had trouble setting up the birthday celebration.</p>
+            <button id="retry-btn" class="retry-btn">🎂 Try Again</button>
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Scripts loaded in correct order -->
     <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
     
-    <!-- Main Application Script -->
-    <script src="js/sceneManager.js"></script>
-    <script src="js/main.js"></script>
+    <!-- Main Application Script as Module -->
+    <script type="module" src="js/main.js"></script>
+    
+    <!-- Add some extra birthday magic -->
+    <script>
+        // Add some fun console messages
+        console.log('🎉 Welcome to Aafia\'s Birthday Celebration! 🎂');
+        console.log('✨ Get ready for 30 seconds of non-stop birthday magic! ✨');
+        console.log('🎊 Features: Confetti • Fireworks • Dancing Balloons • Magical Cake 🎊');
+        
+        // Add keyboard shortcuts for extra fun
+        document.addEventListener('keydown', (e) => {
+            switch(e.key.toLowerCase()) {
+                case ' ': // Spacebar
+                    console.log('🎊 MANUAL CONFETTI BLAST! 🎊');
+                    break;
+                case 'f':
+                    document.getElementById('fullscreen-toggle')?.click();
+                    break;
+                case 'm':
+                    document.getElementById('audio-toggle')?.click();
+                    break;
+                case 'i':
+                    document.getElementById('info-btn')?.click();
+                    break;
+            }
+        });
+        
+        // Add some birthday wishes in console
+        const wishes = [
+            '🎂 Happy Birthday Aafia! May all your dreams come true! ✨',
+            '🎈 Wishing you joy, happiness, and lots of cake! 🍰',
+            '🎊 Another year of awesome begins today! 🌟',
+            '🎉 May your special day be filled with magic! 🪄'
+        ];
+        
+        wishes.forEach((wish, index) => {
+            setTimeout(() => {
+                console.log(wish);
+            }, (index + 1) * 3000);
+        });
+    </script>
 </body>
 </html>
